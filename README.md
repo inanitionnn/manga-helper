@@ -39,7 +39,7 @@ To run the script, follow these steps:
 
 ## Example of Use
 
-![Example of Use](example_of_use)
+![Example of Use](example_of_use.png)
 
 ## Known Issues and Limitations
 
