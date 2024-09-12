@@ -31,7 +31,7 @@ def log_header_with_time(message):
 def input_with_time(message):
     current_time = datetime.now().strftime("%H:%M")
     log_with_time(f"Enter {message} 𖦹 ⋆｡°✩")
-    result = input(f"[{current_time}] ======> ").strip()
+    result = input(f"[{current_time}] ===> ").strip()
     return result
 
 
@@ -149,7 +149,6 @@ def move_cbz_and_pdf_files(folder_path):
     os.makedirs(pdf_folder_path, exist_ok=True)
 
     log_path_with_time(f"From: '{folder_path}'")
-    log_path_with_time(f"To: '{cbz_folder_path}' and '{pdf_folder_path}'")
 
     for filename in os.listdir(folder_path):
         source_path = os.path.join(folder_path, filename)
