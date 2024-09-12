@@ -7,6 +7,7 @@
 - **Convert CBZ to PDF**: Easily convert CBZ files into PDF format for better accessibility and readability.
 - **Compress PDF Files**: Reduce the size of PDF files while maintaining quality to save disk space.
 - **Create PDFs from Images**: Combine multiple images in a folder into a single PDF file.
+- **Combine Multiple PDFs**: Merge multiple PDF files from a folder into a single combined PDF.
 - **Additional Utilities**: Includes functionalities for renaming files and etc
 
 ## Requirements
@@ -48,9 +49,6 @@ To run the script, follow these steps:
 
 2. **Limited PDF Compression**  
    The current compression functionality for PDF files does not significantly reduce their size. The script focuses on maintaining the original quality of the PDFs, which means that the file size might not decrease as much as expected. Future updates may include improved compression algorithms for better size reduction without compromising quality.
-
-3. **Missing PDF Merging Feature**  
-   The script currently lacks a function to merge multiple PDF files into a single document, which could be useful for combining chapters into volumes. This feature is planned for future development, but it is not available at this time.
 
 We appreciate your understanding regarding these limitations and are open to contributions or suggestions for improvement!
 
