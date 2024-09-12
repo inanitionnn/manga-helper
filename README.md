@@ -27,7 +27,7 @@ To run the script, follow these steps:
 2. **Execute the Script**
 
    ```bash
-   python path/to/your/script.py
+   python helper.py
    ```
 3. **If you want to have Exe file**
    ```bash
@@ -35,7 +35,7 @@ To run the script, follow these steps:
    ```
 
    ```bash
-   pyinstaller --onefile path/to/your/script.py
+   pyinstaller --onefile helper.py
    ```
 
 ## Example of Use
