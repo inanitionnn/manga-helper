@@ -251,7 +251,7 @@ def combine_pdfs(folder_path):
 
     folder_name = os.path.basename(folder_path)
     output_pdf_name = os.path.splitext(pdf_files[0])[0] + "_combined.pdf"
-    output_pdf = os.path.join(os.path.dirname(folder_path), output_pdf_name)
+    output_pdf = os.path.join(folder_path, output_pdf_name)
 
     log_path_with_time(f"From: '{folder_path}'")
     log_path_with_time(f"To: '{output_pdf_name}'")
@@ -260,7 +260,6 @@ def combine_pdfs(folder_path):
 
     for pdf_file in pdf_files:
         pdf_path = os.path.join(folder_path, pdf_file)
-        log_path_with_time(f"Adding: '{pdf_path}'")
         pdf_document = fitz.open(pdf_path)
         combined_pdf.insert_pdf(pdf_document)
 
