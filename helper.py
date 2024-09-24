@@ -165,6 +165,11 @@ def move_cbz_and_pdf_files(folder_path):
     log_header_with_time("End")
 
 
+def natural_sort_key(s):
+    return [int(text) if text.isdigit() else text.lower()
+            for text in re.split(r'(\d+)', s)]
+
+
 def convert_cbz_to_pdf(folder_path):
     log_header_with_time("Converting")
     cbz_folder_path = os.path.join(folder_path, "cbz")
@@ -189,11 +194,15 @@ def convert_cbz_to_pdf(folder_path):
                 continue
 
             with ZipFile(cbz_path, 'r') as zip_ref:
-                # Extract images from .cbz
-                images = [
-                    Image.open(
-                        zip_ref.open(name)) for name in zip_ref.namelist() if name.lower().endswith(
+                # Extract image file names and sort them naturally
+                image_names = [
+                    name for name in zip_ref.namelist() if name.lower().endswith(
                         ('png', 'jpg', 'jpeg'))]
+                image_names.sort(key=natural_sort_key)
+
+                # Open images in sorted order
+                images = [Image.open(zip_ref.open(name))
+                          for name in image_names]
                 if images:  # Save images as a single PDF file
                     images[0].save(pdf_path, save_all=True,
                                    append_images=images[1:], optimize=True)
