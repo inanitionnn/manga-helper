@@ -4,7 +4,7 @@
 
 ## Features
 
-- **Convert CBZ to PDF**: Easily convert CBZ files into PDF format for better accessibility and readability.
+- **Convert CBZ and CBR to PDF**: Easily convert CBZ files into PDF format for better accessibility.
 - **Compress PDF Files**: Reduce the size of PDF files while maintaining quality to save disk space.
 - **Create PDFs from Images**: Combine multiple images in a folder into a single PDF file.
 - **Combine Multiple PDFs**: Merge multiple PDF files from a folder into a single combined PDF.
@@ -13,7 +13,7 @@
 ## Requirements
 
 - Python 3.8 or higher
-- Required Python libraries: `Pillow`, `PyMuPDF`
+- Required Python libraries: `Pillow`, `PyMuPDF`, `rarfile`
 
 ## Running the Script
 
@@ -22,7 +22,7 @@ To run the script, follow these steps:
 1. **Install the Required Libraries**
 
    ```bash
-   pip install PyMuPDF Pillow
+   pip install PyMuPDF Pillow rarfile
    ```
 2. **Execute the Script**
 

@@ -22,6 +22,11 @@ def rename_files(folder_path):
 
     for file_name in os.listdir(folder_path):
         try:
+            full_path = os.path.join(folder_path, file_name)
+
+            if not os.path.isfile(full_path):
+                continue  # Skip directories
+
             volume_number = None
 
             # Find volume number using patterns
@@ -61,9 +66,9 @@ def rename_files(folder_path):
 def move_files_to_subfolders(folder_path):
     log_header_with_time("Moving")
 
-    cbz_folder_path = os.path.join(folder_path, "cbz")
+    archive_folder_path = os.path.join(folder_path, "archives")
     pdf_folder_path = os.path.join(folder_path, "pdf")
-    os.makedirs(cbz_folder_path, exist_ok=True)
+    os.makedirs(archive_folder_path, exist_ok=True)
     os.makedirs(pdf_folder_path, exist_ok=True)
 
     log_path_with_time(f"From: '{folder_path}'")
@@ -71,8 +76,8 @@ def move_files_to_subfolders(folder_path):
     for filename in os.listdir(folder_path):
         source_path = os.path.join(folder_path, filename)
 
-        if filename.endswith('.cbz'):
-            destination_path = os.path.join(cbz_folder_path, filename)
+        if filename.lower().endswith(('.cbz', '.cbr')):
+            destination_path = os.path.join(archive_folder_path, filename)
             shutil.move(source_path, destination_path)
             log_items_with_time(f"Moved to cbz: '{filename}'")
         elif filename.endswith('.pdf'):
@@ -87,14 +92,14 @@ def remove_subfolders(folder_path):
     log_header_with_time("Removing")
 
     # Define folder paths
-    cbz_folder_path = os.path.join(folder_path, "cbz")
+    archive_folder_path = os.path.join(folder_path, "archives")
     pdf_folder_path = os.path.join(folder_path, "pdf")
-    compressed_pdf_folder_path = os.path.join(folder_path, "compressed pdf")
+    compressed_folder_path = os.path.join(folder_path, "compressed")
 
     # Move files from 'compressed pdf' to root folder
-    if os.path.exists(compressed_pdf_folder_path):
-        for filename in os.listdir(compressed_pdf_folder_path):
-            source_path = os.path.join(compressed_pdf_folder_path, filename)
+    if os.path.exists(compressed_folder_path):
+        for filename in os.listdir(compressed_folder_path):
+            source_path = os.path.join(compressed_folder_path, filename)
             destination_path = os.path.join(folder_path, filename)
 
             # Move the file to the root folder
@@ -103,14 +108,14 @@ def remove_subfolders(folder_path):
                 f"Moved file from 'compressed pdf': '{filename}'")
 
         # Optionally remove the empty 'compressed pdf' folder
-        shutil.rmtree(compressed_pdf_folder_path)
+        shutil.rmtree(compressed_folder_path)
         log_items_with_time(
-            f"Removed folder: '{compressed_pdf_folder_path}'")
+            f"Removed folder: '{compressed_folder_path}'")
 
     # Remove cbz and pdf folders if they exist
-    if os.path.exists(cbz_folder_path):
-        shutil.rmtree(cbz_folder_path)
-        log_items_with_time(f"Removed folder: '{cbz_folder_path}'")
+    if os.path.exists(archive_folder_path):
+        shutil.rmtree(archive_folder_path)
+        log_items_with_time(f"Removed folder: '{archive_folder_path}'")
 
     if os.path.exists(pdf_folder_path):
         shutil.rmtree(pdf_folder_path)
