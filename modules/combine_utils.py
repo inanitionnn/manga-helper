@@ -18,7 +18,7 @@ def combine_pdfs_to_pdf(folder_path):
     output_pdf = os.path.join(folder_path, output_pdf_name)
 
     log_path_with_time(f"From: '{folder_path}'")
-    log_path_with_time(f"To: '{output_pdf_name}'")
+    log_path_with_time(f"To:   '{output_pdf_name}'")
 
     combined_pdf = fitz.open()
 
@@ -47,7 +47,7 @@ def combine_images_to_pdf(folder_path, is_log=True):
 
     if is_log:
         log_path_with_time(f"From: '{folder_path}'")
-        log_path_with_time(f"To: '{os.path.dirname(folder_path)}'")
+        log_path_with_time(f"To:   '{os.path.dirname(folder_path)}'")
 
     # Gather all image files from the folder and sort them
     images = sorted([file for file in os.listdir(folder_path) if file.endswith(
