@@ -1,6 +1,6 @@
 # Manga Helper
 
-> **Note:** Manga Helper is a Python script designed to convert CBZ files to PDF and compress PDFs. I developed this script in just a few hours as a small helper tool.
+> **Note:** Manga Helper is a Python script designed to convert CBZ and CBR files to PDF and compress PDFs. I developed this script in just a few days as a small helper tool. 
 
 ## Features
 
@@ -40,7 +40,7 @@ To run the script, follow these steps:
 
 ## Example of Use
 
-![Example of Use](example_of_use.png)
+![Example of Use](example_of_use3.png)
 
 ## Known Issues and Limitations
 
