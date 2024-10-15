@@ -98,7 +98,7 @@ def convert_cbz_to_pdf(folder_path):
             log_items_with_time(
                 f"Converted: '{file_name}' to '{file_name.rsplit('.', 1)[0] + '.pdf'}'")
 
-    log_header_with_time("End")
+    log_header_with_time("End Converting")
 
 
 def compress_pdfs(folder_path):
@@ -133,4 +133,4 @@ def compress_pdfs(folder_path):
 
             log_items_with_time(f"Compressed: '{file_name}'")
 
-    log_header_with_time("End")
+    log_header_with_time("End Compressing")

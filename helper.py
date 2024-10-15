@@ -1,6 +1,6 @@
 import os
-from modules.log_utils import log_header_with_time, input_with_time, log_with_time, error_with_time, divider_with_time
-from modules.combine_utils import combine_pdfs_to_pdf
+from modules.log_utils import log_header_with_time, input_with_time,  error_with_time
+from modules.combine_utils import  combine_pdfs_to_pdf, combine_subfolders_images_to_pdfs
 from modules.file_utils import move_files_to_subfolders, rename_files, remove_subfolders
 from modules.pdf_utils import compress_pdfs, convert_cbz_to_pdf
 from modules.print_utils import print_info, print_menu
@@ -54,10 +54,8 @@ def main():
                 remove_subfolders(directory_path)
             elif choice == "9":
                 combine_pdfs_to_pdf(directory_path)
-            # elif choice == "10":
-            #     combine_images_to_pdf(directory_path)
-            # elif choice == "11":
-            #     combine_subfolders_images_to_pdfs(directory_path)
+            elif choice == "10":
+                combine_subfolders_images_to_pdfs(directory_path)
             else:
                 error_with_time("Invalid choice. Please enter a valid number.")
         except KeyboardInterrupt:

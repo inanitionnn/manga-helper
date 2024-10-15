@@ -60,7 +60,7 @@ def rename_files(folder_path):
         error_with_time(
             "No files matching the renaming pattern were found in the folder.")
 
-    log_header_with_time("End")
+    log_header_with_time("End Renaming")
 
 
 def move_files_to_subfolders(folder_path):
@@ -85,7 +85,7 @@ def move_files_to_subfolders(folder_path):
             shutil.move(source_path, destination_path)
             log_items_with_time(f"Moved to pdf: '{filename}'")
 
-    log_header_with_time("End")
+    log_header_with_time("End Moving")
 
 
 def remove_subfolders(folder_path):
@@ -121,4 +121,4 @@ def remove_subfolders(folder_path):
         shutil.rmtree(pdf_folder_path)
         log_items_with_time(f"Removed folder: '{pdf_folder_path}'")
 
-    log_header_with_time("End")
+    log_header_with_time("End Removing")

@@ -13,12 +13,14 @@ def combine_pdfs_to_pdf(folder_path):
         error_with_time("No PDFs found in the specified folder.")
         return
 
+    combined_pdf_folder = os.path.join(folder_path, "pdf")
+    os.makedirs(combined_pdf_folder, exist_ok=True)
+
     folder_name = os.path.basename(folder_path)
-    output_pdf_name = os.path.splitext(pdf_files[0])[0] + "_combined.pdf"
-    output_pdf = os.path.join(folder_path, output_pdf_name)
+    output_pdf = os.path.join(combined_pdf_folder, f"{folder_name}.pdf")
 
     log_path_with_time(f"From: '{folder_path}'")
-    log_path_with_time(f"To:   '{output_pdf_name}'")
+    log_path_with_time(f"To:   '{combined_pdf_folder}'")
 
     combined_pdf = fitz.open()
 
@@ -31,23 +33,16 @@ def combine_pdfs_to_pdf(folder_path):
     combined_pdf.close()
 
     log_items_with_time(f"Created: {folder_name}_combined.pdf")
-    log_header_with_time("End")
+    log_header_with_time("End Combining")
 
 
-def combine_images_to_pdf(folder_path, is_log=True):
-    if is_log:
-        log_header_with_time("Combining")
-
+def combine_images_to_pdf(folder_path):
     combined_pdf_folder = os.path.join(
-        os.path.dirname(folder_path), "combined pdf")
+        os.path.dirname(folder_path), "pdf")
     os.makedirs(combined_pdf_folder, exist_ok=True)
 
     folder_name = os.path.basename(folder_path)
     output_pdf = os.path.join(combined_pdf_folder, f"{folder_name}.pdf")
-
-    if is_log:
-        log_path_with_time(f"From: '{folder_path}'")
-        log_path_with_time(f"To:   '{os.path.dirname(folder_path)}'")
 
     # Gather all image files from the folder and sort them
     images = sorted([file for file in os.listdir(folder_path) if file.endswith(
@@ -68,8 +63,6 @@ def combine_images_to_pdf(folder_path, is_log=True):
     first_image.save(output_pdf, save_all=True, append_images=image_list)
 
     log_items_with_time(f"Created: {folder_name}.pdf")
-    if is_log:
-        log_header_with_time("End")
 
 
 def combine_subfolders_images_to_pdfs(folder_path):
@@ -82,6 +75,6 @@ def combine_subfolders_images_to_pdfs(folder_path):
 
         if os.path.isdir(item_path):
             log_items_with_time(f"Processing folder: '{item}'")
-            combine_images_to_pdf(item_path, False)
+            combine_images_to_pdf(item_path)
 
-    log_header_with_time("End")
+    log_header_with_time("End Combining")
