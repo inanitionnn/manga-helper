@@ -57,7 +57,7 @@ def print_info():
     log_with_time("Combines all pdf files in the directory into a single pdf file.")
     divider_with_time()
     log_with_time("   10. Combine subfolders images")
-    log_with_time("From:   'directory path'")
+    log_with_time("From:   'directory path' subfolders")
     log_with_time("To:     'pdf' subfolder")
     log_with_time("Combines all image files in the subfolders into a single pdf file.")
     divider_with_time()
