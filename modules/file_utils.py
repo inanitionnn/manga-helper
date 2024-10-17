@@ -20,6 +20,25 @@ def rename_files(folder_path):
         r'(\d{1,2})'            # Matches simple volume numbers (e.g., 3)
     ]
 
+    # Get list of files, excluding directories
+    files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+
+    # If only one file exists, rename without pattern
+    if len(files) == 1:
+        file_name = files[0]
+        full_path = os.path.join(folder_path, file_name)
+        new_file_name = f"{new_name}.{file_name.split('.')[-1].lower()}"
+        new_path = os.path.join(folder_path, new_file_name)
+
+        try:
+            os.rename(full_path, new_path)
+            log_items_with_time(f"Renamed: '{file_name}' to '{new_file_name}'")
+            return
+        except Exception as e:
+            error_with_time(f"Could not rename '{file_name}' due to an error: {e}")
+            return
+
+    # Proceed with renaming if more than one file
     for file_name in os.listdir(folder_path):
         try:
             full_path = os.path.join(folder_path, file_name)
