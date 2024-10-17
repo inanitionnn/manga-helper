@@ -17,7 +17,7 @@ def rename_files(folder_path):
     volume_patterns = [
         r'v(\d+)',              # Matches v01, v08, etc.
         r'Volume[_ ]?(\d+)',    # Matches Volume_06, Volume 06, etc.
-        r'(\d{1,2})'            # Matches simple volume numbers (e.g., 3)
+        r'(\d{1,3})'            # Matches simple volume numbers (e.g., 3)
     ]
 
     # Get list of files, excluding directories
