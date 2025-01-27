@@ -1,16 +1,17 @@
 import os
+from tqdm import tqdm
 from PIL import Image  # Pillow
 import fitz  # PyMuPDF
-from modules.log_utils import log_header_with_time, error_with_time, log_items_with_time, log_path_with_time
+from modules.log_utils import get_error_with_time, get_log_header_with_time, get_log_items_with_time, get_log_path_with_time
 
 
 def combine_pdfs_to_pdf(folder_path):
-    log_header_with_time("Combining")
+    print(get_log_header_with_time("Combining"))
 
     pdf_files = sorted([file for file in os.listdir(
         folder_path) if file.endswith('.pdf')])
     if not pdf_files:
-        error_with_time("No PDFs found in the specified folder.")
+        print(get_error_with_time("No PDFs found in the specified folder."))
         return
 
     combined_pdf_folder = os.path.join(folder_path, "pdf")
@@ -19,8 +20,9 @@ def combine_pdfs_to_pdf(folder_path):
     folder_name = os.path.basename(folder_path)
     output_pdf = os.path.join(combined_pdf_folder, f"{folder_name}.pdf")
 
-    log_path_with_time(f"From: '{folder_path}'")
-    log_path_with_time(f"To:   '{combined_pdf_folder}'")
+    print(get_log_path_with_time(f"From: '{folder_path}'"))
+    print(get_log_path_with_time(f"To:   '{combined_pdf_folder}'"))
+    print()
 
     combined_pdf = fitz.open()
 
@@ -32,8 +34,8 @@ def combine_pdfs_to_pdf(folder_path):
     combined_pdf.save(output_pdf)
     combined_pdf.close()
 
-    log_items_with_time(f"Created: {folder_name}_combined.pdf")
-    log_header_with_time("End Combining")
+    print(get_log_items_with_time(f"Created: {folder_name}_combined.pdf"))
+    print(get_log_header_with_time("End Combining"))
 
 
 def combine_images_to_pdf(folder_path):
@@ -48,7 +50,7 @@ def combine_images_to_pdf(folder_path):
     images = sorted([file for file in os.listdir(folder_path) if file.endswith(
         ('.png', '.jpg', '.jpeg', '.bmp', '.gif'))])
     if not images:
-        error_with_time("No images found in the specified folder.")
+        print(get_error_with_time("No images found in the specified folder."))
         return
 
     # Open the first image and convert remaining images to RGB mode
@@ -62,19 +64,24 @@ def combine_images_to_pdf(folder_path):
     # Save images as a single PDF file
     first_image.save(output_pdf, save_all=True, append_images=image_list)
 
-    log_items_with_time(f"Created: {folder_name}.pdf")
+    print(get_log_items_with_time(f"Created: {folder_name}.pdf"))
 
 
 def combine_subfolders_images_to_pdfs(folder_path):
-    log_header_with_time("Combining")
+    print(get_log_header_with_time("Combining"))
 
-    log_path_with_time(f"From: '{folder_path}'")
+    print(get_log_path_with_time(f"From: '{folder_path}'"))
+    print()
 
-    for item in os.listdir(folder_path):
-        item_path = os.path.join(folder_path, item)
+    subfolders = [item for item in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, item))]
 
-        if os.path.isdir(item_path):
-            log_items_with_time(f"Processing folder: '{item}'")
+    with tqdm(total=len(subfolders), desc="Combining folders", unit="folder") as pbar:
+        for item in subfolders:
+            item_path = os.path.join(folder_path, item)
+
             combine_images_to_pdf(item_path)
+            
+            pbar.write(get_log_items_with_time(f"Already compressed: '{item}'"))
+            pbar.update(1)
 
-    log_header_with_time("End Combining")
+    print(get_log_header_with_time("End Combining"))

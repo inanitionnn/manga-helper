@@ -1,14 +1,14 @@
-
 import os
-import io
+from modules.log_utils import get_error_with_time, get_log_header_with_time, get_log_items_with_time, get_log_path_with_time, input_with_time
+
 import time
+from tqdm import tqdm
+
 import re
 from PIL import Image  # Pillow
-import fitz  # PyMuPDF
 import rarfile
+import io
 from zipfile import ZipFile
-from tqdm import tqdm
-from modules.log_utils import get_error_with_time, get_log_header_with_time, get_log_items_with_time, get_log_path_with_time
 
 def is_locked(filepath):
     locked = None
@@ -38,6 +38,14 @@ def natural_sort_key(s):
             for text in re.split(r'(\d+)', s)]
 
 
+def get_directory_path():
+    while True:
+        directory_path = input_with_time("directory path").strip()
+        if os.path.exists(directory_path) and os.path.isdir(directory_path):
+            return directory_path
+        else:
+            print(get_error_with_time(f"Invalid directory path: '{directory_path}'. Please try again."))
+
 def convert_cbz_to_pdf(folder_path):
     print(get_log_header_with_time("Converting"))
     archive_folder_path = os.path.join(folder_path, "archives")
@@ -50,7 +58,7 @@ def convert_cbz_to_pdf(folder_path):
 
     files = [f for f in os.listdir(archive_folder_path) if f.lower().endswith(('.cbz', '.cbr'))]
     
-    with tqdm(total=len(files), desc="Converting", unit="file") as pbar:
+    with tqdm(total=len(files), desc="Converting:", unit="file") as pbar:
         for idx, file_name in enumerate(files):
             archive_path = os.path.join(archive_folder_path, file_name)
             pdf_path = os.path.join(pdf_folder_path, file_name.rsplit('.', 1)[0] + '.pdf')
@@ -104,45 +112,13 @@ def convert_cbz_to_pdf(folder_path):
     print(get_log_header_with_time("End Converting"))
 
 
-def compress_pdfs(folder_path):
-    print(get_log_header_with_time("Compressing"))
 
-    compressed_pdf_folder_path = os.path.join(folder_path, "compressed")
-    pdf_folder_path = os.path.join(folder_path, "pdf")
-    os.makedirs(compressed_pdf_folder_path, exist_ok=True)
-
-    print(get_log_path_with_time(f"From: '{pdf_folder_path}'"))
-    print(get_log_path_with_time(f"To:   '{compressed_pdf_folder_path}'"))
+def main():
+  
+    directory_path = get_directory_path()
     print()
+    convert_cbz_to_pdf(directory_path)
 
-    pdf_files = [f for f in os.listdir(pdf_folder_path) if f.lower().endswith('.pdf')]
 
-    with tqdm(total=len(pdf_files), desc="Compressing", unit="file") as pbar:
-        for file_name in pdf_files:
-            pdf_path = os.path.join(pdf_folder_path, file_name)
-            compressed_pdf_path = os.path.join(
-                compressed_pdf_folder_path, file_name)
-
-            if os.path.exists(compressed_pdf_path):
-                pbar.write(get_log_items_with_time(f"Already compressed: '{file_name}'"))
-                pbar.update(1)
-                continue
-
-            try:
-                doc = fitz.open(pdf_path)
-                doc.save(compressed_pdf_path,
-                         deflate=True,
-                         deflate_images=True,
-                         deflate_fonts=True,
-                         clean=True,
-                         garbage=4
-                         )
-                doc.close()
-
-                pbar.write(get_log_items_with_time(f"Compressed: '{file_name}'"))
-            except Exception as e:
-                pbar.write(get_error_with_time(f"Error compressing '{file_name}': {e}"))
-
-            pbar.update(1)
-
-    print(get_log_header_with_time("End Compressing"))
+if __name__ == "__main__":
+    main()

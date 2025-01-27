@@ -1,80 +1,72 @@
-
-from modules.log_utils import divider_with_time, log_header_with_time, log_with_time
-
+from modules.log_utils import get_divider_with_time, get_log_header_with_time, get_log_with_time
 
 def print_info():
-    log_header_with_time("Info")
-    log_with_time("   0. Info")
-    log_with_time("Display information about the script and its functionalities.")
-    divider_with_time()
-    log_with_time("   1. Print menu")
-    log_with_time("Display the available menu options.")
-    divider_with_time()
-    log_with_time("   2. New directory path")
-    log_with_time("Input:  'directory path'")
-    log_with_time("Change the current directory path.")
-    divider_with_time()
-    log_with_time("   3. Auto")
-    log_with_time("Input:  'files name'")
-    log_with_time("From:   'directory path'")
-    log_with_time("To:     'directory path'")
-    log_with_time("Automatically performs the following actions:")
-    log_with_time("Rename, Move, Convert, Compress, and Remove")
-    divider_with_time()
-    log_with_time("   4. Rename")
-    log_with_time("Input:  'files name'")
-    log_with_time("From:   'directory path'")
-    log_with_time("To:     'directory path'")
-    log_with_time("Renames all files in the directory that contain a volume number.")
-    log_with_time("Extracts numbers from the name and adds them in the format 'v***'.")
-    log_with_time("Example: 'something (something) 1 something' ==> 'files name v001'")
-    divider_with_time()
-    log_with_time("   5. Move files")
-    log_with_time("From:   'directory path'")
-    log_with_time("To:     'archives' and 'pdf' subfolders")
-    log_with_time("Moves all cbz and cbr files to the 'archives' folder")
-    log_with_time("and all pdf files to the 'pdf' folder.")
-    divider_with_time()
-    log_with_time("   6. Convert files")
-    log_with_time("From:   'archives' subfolder")
-    log_with_time("To:     'pdf' subfolder")
-    log_with_time("Clone and converts all cbz and cbr files to pdf files.")
-    divider_with_time()
-    log_with_time("   7. Compress files")
-    log_with_time("From:   'pdf' subfolder")
-    log_with_time("To:     'compressed' subfolder")
-    log_with_time("Clone and compress files from the 'pdf' folder into the 'compressed' folder.")
-    divider_with_time()
-    log_with_time("   8. Remove subfolders")
-    log_with_time("From:   'compressed' subfolder")
-    log_with_time("To:     'directory path'")
-    log_with_time("Moves files from the 'compressed' folder to its parent directory")
-    log_with_time("and deletes subfolders: 'archives', 'pdf', 'compressed' ")
-    divider_with_time()
-    log_with_time("   9. Combine pdf files")
-    log_with_time("From:   'directory path'")
-    log_with_time("To:     'directory path'")
-    log_with_time("Combines all pdf files in the directory into a single pdf file.")
-    divider_with_time()
-    log_with_time("   10. Combine subfolders images")
-    log_with_time("From:   'directory path' subfolders")
-    log_with_time("To:     'pdf' subfolder")
-    log_with_time("Combines all image files in the subfolders into a single pdf file.")
-    divider_with_time()
+    menu_options = [
+        # {"id": "0", "header": "Info", "description": "Display information about the script and its functionalities."},
+        # {"id": "1", "header": "Print menu", "description": "Display the available menu options."},
+        {"id": "1", "header": "Info", "description": "Display information about the script and its functionalities."},
+        {"id": "2", "header": "New directory path", "description": "Change the current directory path.",
+         "input": "'directory path'"},
+        {"id": "3", "header": "Auto", "description": "Automatically performs the following actions: Rename, Move, Convert, Compress, and Remove.",
+         "input": "'files name'", "from": "'directory path'", "to": "'directory path'"},
+        {"id": "4", "header": "Rename", "description": "Renames all files in the directory that contain a volume number. Extracts numbers from the name and adds them in the format 'v***'.",
+         "input": "'files name'", "from": "'directory path'", "to": "'directory path'",
+         "example": "'something (something) 1 something' ==> 'files name v001'"},
+        {"id": "5", "header": "Move files", "description": "Moves all cbz and cbr files to the 'archives' folder and all pdf files to the 'pdf' folder.",
+         "from": "'directory path'", "to": "'archives' and 'pdf' subfolders"},
+        {"id": "6", "header": "Convert files", "description": "Clone and converts all cbz and cbr files to pdf files.",
+         "from": "'archives' subfolder", "to": "'pdf' subfolder"},
+        {"id": "7", "header": "Compress files", "description": "Clone and compress files from the 'pdf' folder into the 'compressed' folder.",
+         "from": "'pdf' subfolder", "to": "'compressed' subfolder"},
+        {"id": "8", "header": "Remove subfolders", "description": "Moves files from the 'compressed' folder to its parent directory and deletes subfolders: 'archives', 'pdf', 'compressed'.",
+         "from": "'compressed' subfolder", "to": "'directory path'"},
+        {"id": "9", "header": "Combine pdf files", "description": "Combines all pdf files in the directory into a single pdf file.",
+         "from": "'directory path'", "to": "'directory path'"},
+        {"id": "10", "header": "Combine subfolders images", "description": "Combines all image files in the subfolders into a single pdf file.",
+         "from": "'directory path' subfolders", "to": "'pdf' subfolder"}
+    ]
+
+    print(get_log_header_with_time("Info"))
+
+    for option in menu_options:
+        print(get_log_with_time(f"   {option['id']}. {option['header']}"))
+        print(get_log_with_time(option['description']))
+        
+        if 'input' in option:
+            print(get_log_with_time(f"Input:  {option['input']}"))
+        
+        if 'from' in option:
+            print(get_log_with_time(f"From:   {option['from']}"))
+        
+        if 'to' in option:
+            print(get_log_with_time(f"To:     {option['to']}"))
+        
+        if 'example' in option:
+            print(get_log_with_time(f"Example: {option['example']}"))
+
+        print(get_divider_with_time())
+        print()
 
 def print_menu():
-    log_header_with_time("Choose an action")
-    log_with_time("    0. Info")
-    log_with_time("    1. Print menu")
-    log_with_time("    2. New directory path")
-    divider_with_time()
-    log_with_time("    3. Auto")
-    log_with_time("    4. Rename")
-    log_with_time("    5. Move to subfolders")
-    log_with_time("    6. Convert")
-    log_with_time("    7. Compress")
-    log_with_time("    8. Remove subfolders")
-    divider_with_time()
-    log_with_time("    9. Combine pdf files")
-    log_with_time("   10. Combine subfolders images")
-    divider_with_time()
+    menu_options = [
+        # {"id": "0", "label": "Info"},
+        # {"id": "1", "label": "Print menu"},
+        {"id": "1", "label": "Info"},
+        {"id": "2", "label": "New directory path"},
+        {"id": "3", "label": "Auto"},
+        {"id": "4", "label": "Rename"},
+        {"id": "5", "label": "Move to subfolders"},
+        {"id": "6", "label": "Convert"},
+        {"id": "7", "label": "Compress"},
+        {"id": "8", "label": "Remove subfolders"},
+        {"id": "9", "label": "Combine pdf files"},
+        {"id": "10", "label": "Combine subfolders images"}
+    ]
+    
+    print(get_log_header_with_time("Choose an action"))
+    
+    for option in menu_options:
+        print(get_log_with_time(f"    {option['id']}. {option['label']}"))
+    
+    print(get_divider_with_time())
+    print()

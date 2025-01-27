@@ -1,6 +1,6 @@
 # Manga Helper
 
-> **Note:** Manga Helper is a Python script designed to convert CBZ and CBR files to PDF and compress PDFs. I developed this script in just a few days as a small helper tool. 
+> **Note:** Manga Helper is a Python script designed to convert CBZ and CBR files to PDF and compress PDFs. I developed this script in just a few days as a small helper tool.
 
 ## Features
 
@@ -22,14 +22,17 @@ To run the script, follow these steps:
 1. **Install the Required Libraries**
 
    ```bash
-   pip install PyMuPDF Pillow rarfile
+   pip install PyMuPDF Pillow rarfile tqdm
    ```
+
 2. **Execute the Script**
 
    ```bash
    python helper.py
    ```
+
 3. **If you want to have Exe file**
+
    ```bash
    pip install -U pyinstaller
    ```
@@ -53,4 +56,5 @@ To run the script, follow these steps:
 We appreciate your understanding regarding these limitations and are open to contributions or suggestions for improvement!
 
 ## Contributing
+
 Contributions, issues, and feature requests are welcome! Feel free to open an issue.
